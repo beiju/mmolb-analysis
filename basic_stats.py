@@ -90,12 +90,15 @@ def main():
 
         try:
             ip = stats_obj["outs"] / 3
+            hits_allowed = stats_obj.get("hits_allowed", 0)
+            walks = stats_obj.get("walks", 0)
         except KeyError:
             era_str = None
         else:
             era = 9 * earned_runs / ip
+            whip = (hits_allowed + walks) / ip
             ip_str = dot_format(ip)
-            era_str = f"ERA {era:.2f} ({ip_str} IP)"
+            era_str = f"ERA: {era:.2f} WHIP: {whip:.2f} ({ip_str} IP)"
 
         stats_str = ", ".join(s for s in [ba_str, ops_str, era_str] if s is not None)
         if stats_str:
